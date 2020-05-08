@@ -38,7 +38,8 @@ puppeteer.launch().then(async browser => {
             })
             return list;
         });
-        fs.writeFile('./demo03.txt', JSON.stringify(result), { 'flag': 'a' }, function (err) {
+        // \n
+        fs.appendFile('./demo03.txt', JSON.stringify(result), function (err) {
             if (err) throw err;
             console.log('写入成功' + i);
             if (i < allpages) {
