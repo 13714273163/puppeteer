@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const fs = require('fs');
+const excelPort = require('excel-export');
 /* 爬虫的目标链接地址: 豆瓣读书 */
 
 let allpages = 5
