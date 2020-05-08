@@ -1,12 +1,25 @@
 const puppeteer = require('puppeteer');
+const cheerio = require('cheerio');
 const fs = require('fs');
 /* 爬虫的目标链接地址: 豆瓣电影 */
 const url = `https://movie.douban.com/tag/#/?sort=R&range=0,10&tags=`;
+const sleep = time => new Promise(resolve => {
+    setTimeout(resolve, time);
+});
+const pages = 3
 puppeteer.launch().then(async browser => {
     const page = await browser.newPage();
     await page.goto(url);
     await page.waitForSelector('.more');
-    const result = await page.evaluate(() => { 
+
+    // 模拟点击3次more，获取3页的数据  
+    for (let i = 0; i < pages; i++) {
+        console.log(`page  ${i}`)
+        await sleep(3000);
+        await page.click('.more');
+    }
+
+    const result = await page.evaluate(() => {
         let $ = window.$;
         let nodeItems = $('.list-wp a');
         let links = [];
@@ -29,8 +42,8 @@ puppeteer.launch().then(async browser => {
 
     await browser.close();
 
-    // 创建一个可以写入的流，写入到文件 demo01.txt 中
-    var writerStream = fs.createWriteStream('demo01.txt');
+    // 创建一个可以写入的流，写入到文件 demo02.txt 中
+    var writerStream = fs.createWriteStream('demo02.txt');
 
     // 使用 utf8 编码写入数据
     writerStream.write(JSON.stringify(result), 'UTF8');
