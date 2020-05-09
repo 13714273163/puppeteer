@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-⌃-Compatible" content="ie=edge">
+    <title>Node Web</title>
+    <style>
+        img{
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <ul>
+            <li v-for="(item, index) in items" :key="index">
+                <img :src="item.images" alt="">
+            </li>
+        </ul>
+        <input type="text" v-model="item">
+        <!-- <button @click="postApi">添加</button> -->
+    </div>
+
+    <!-- cdn 引用：Vue 和 Node -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        new Vue({
+            el: document.getElementById('app'),
+            data: function () {
+                return {
+                    items: [],
+                    item: '',
+                }
+            },
+            created() {
+                // 进入页面请求数据
+                this.get()
+            },
+            methods: {
+                // 点击按钮提交数据
+                postApi() {
+                    axios.post('http://localhost:3000/sendMessage', {
+                        // item: this.item
+                        id:8,
+                        title:'旅游'
+                    }).then(res => {
+                        console.log(res);
+                        this.get()
+                    }).catch(function (err) {
+                        console.log(err)
+                    })
+                },
+                get(){
+                    axios.get('http://localhost:3000/getMessage').then(res => {
+                        console.log(res);
+                        this.items = res.data.data.lists;
+                    }).catch(function (err) {
+                        console.log('error')
+                        console.log(err)
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
