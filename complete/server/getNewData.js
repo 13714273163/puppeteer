@@ -9,10 +9,10 @@ var connection = mysql.createConnection({
     // user: 'root',
     // password: '123456',
     // database: 'guowf'
-    host: 'sdm699633211.my3w.com',
-    user: 'sdm699633211',
-    password: 'JDKEdhsh234',
-    database: 'sdm699633211_db'
+    host: 'xxxx',
+    user: 'xxxx',
+    password: 'xxxx',
+    database: 'xxxx'
 });
 // 开始连接
 connection.connect();
